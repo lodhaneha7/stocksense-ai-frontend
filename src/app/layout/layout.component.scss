@@ -1,0 +1,10 @@
+:host ::ng-deep .layout-search p-autocomplete .p-autocomplete.p-component.p-inputwrapper {
+    width: 100%;
+    input.p-element.p-autocomplete-input.p-inputtext{
+        width: 100%;
+    }
+  }
+
+  :host ::ng-deep .p-toolbar-group-right.p-toolbar-group-end{
+    width: 22%;
+  }

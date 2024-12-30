@@ -1,0 +1,27 @@
+<div class="h-[92vh]">
+  <p-toolbar styleClass="bg-gray-900 shadow-2"
+    [style]="{ 'border-radius': '3rem', 'background-image': 'linear-gradient(to right, var(--bluegray-500), var(--bluegray-800))','height': '4rem' }">
+    <ng-template pTemplate="start">
+      <a routerLink="/home" class="flex items-center">
+        <img src="assets/market-analysis.png" class="w-14 h-14 mr-1 -mt-3" />
+        <span class="font-bold text-bluegray-50 text-2xl font-sans -mt-3">
+          StockSense AI Platform
+        </span>
+      </a>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="flex align-items-center mr-4 -mt-3 w-full">
+        @if(showSearchCompany){
+        <form [formGroup]="companyFormGroup" class="w-full layout-search">
+          <p-autoComplete formControlName="keyword" [suggestions]="(filteredOptions$ | async) || [] " [showClear]="true"
+            variant="filled" field="issuerName" placeholder=" Search for a Company"
+            class="rounded-lg text-lg p-1 bg-gray-400 w-full" (onSelect)="search($event)" />
+        </form>
+        }
+      </div>
+    </ng-template>
+  </p-toolbar>
+  
+  <router-outlet></router-outlet>
+
+</div>

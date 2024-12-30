@@ -1,0 +1,55 @@
+
+<div class="rounded mx-auto p-6" id="contentToConvert">
+     @if (companyDetails$ | async ; as companyDetails) {
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" >
+    <!-- Company Details Card -->
+    <app-company-details (generatePdf)="captureScreen(companyDetails.companyData.companyName)" [data]="companyDetails.companyData"></app-company-details> 
+
+    <!-- AI Insights Card -->
+    <div class="bg-white shadow-md rounded-lg p-6 border border-gray-200 ">
+      <h2 class="text-4xl font-semibold text-gray-800 mb-4">AI Insights</h2>
+      <div class="max-h-96 overflow-auto">
+      @if(aiInsightResponse){
+        <div [innerHTML]="getHtmlContent()"></div>
+      }@else {
+        <div class="flex flex-col justify-center items-center">
+          <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid mb-4"></div>
+          <div class="text-center">
+            <h2 class="text-lg font-semibold text-gray-800 flex justify-center items-center">
+              AI is analyzing and generating options
+              <span class="dots ml-2">
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+              </span>
+            </h2>
+            <p class="text-gray-600 mt-2">
+              This might take a few seconds. Please wait while we process the data.
+            </p>
+          </div>
+        </div>
+      }
+    </div>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-4 gap-6">
+    <app-financial-chart [data]="companyDetails.financialData" class="col-span-1"></app-financial-chart>
+    <app-stock-price-chart [data]="(stockPriceChartData$ | async)" class="col-span-3"></app-stock-price-chart>
+  </div>
+}
+  @if(loader){
+    <div class="flex justify-center items-center h-screen">
+      <div class="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500 border-solid"></div>
+    </div>
+  }
+  @if(showNoRecordFound){
+    <div class="flex flex-col items-center justify-center h-full p-6 text-center bg-gray-50 rounded-lg border border-gray-200 top-64 relative">
+      <i class="pi pi-exclamation-circle text-gray-400 text-5xl mb-4"></i>
+      <h2 class="text-xl font-semibold text-gray-600">No Record Found</h2>
+      <p class="text-gray-500 text-sm mt-2">
+        We couldn't find any data matching your query.
+      </p>
+    </div>
+  }
+</div>

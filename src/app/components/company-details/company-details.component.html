@@ -1,0 +1,115 @@
+<div class="bg-white shadow-md rounded-lg p-5 border border-gray-200">
+  <div class="flex space-x-4 text-gray-800 items-start mb-6">
+    <span class="text-5xl font-semibold">{{data.companyName}}</span>
+    <span class="text-lg font-semibold">{{data.currentPrice.BSE | currency:'INR'}} </span>
+    <div class="flex items-center">
+      <i 
+        class="pi text-base font-semibold mr-1" 
+        [ngClass]="{
+          'pi-arrow-circle-up text-green-500': !isNegative(data.percentChange),
+          'pi-arrow-circle-down text-red-500': isNegative(data.percentChange)
+        }">
+      </i>
+      <span class="font-semibold text-base" [ngClass]="{
+        'text-red-500': isNegative(data.percentChange),
+        'text-green-500': !isNegative(data.percentChange)
+      }">
+        {{ data.percentChange }}%
+      </span>
+    </div>
+    <div>
+      <p-button label="Generate PDF" icon="pi pi-file-pdf" class="text-blue-500 absolute left-[40%] top-[14%]" (onClick)="generatePdf.emit()"></p-button>
+    </div>
+  </div>
+  <div class="flex space-x-4 text-gray-800 items-start mb-3">
+    <span class="font-semibold text-xl">ABOUT</span>
+  </div>
+  <div class="flex space-x-4 text-gray-800 items-start mb-3">
+    <span>{{ isExpanded ? data.companyDescription : (data.companyDescription | slice: 0:200) + '...'}}</span>
+
+  </div>
+  <div class="flex items-end justify-end mb-3">
+    <span (click)="toggleText()" style="color: #007ad9; cursor: pointer; text-decoration: underline;">
+      {{ isExpanded ? 'Read Less' : 'Read More' }}
+    </span>
+  </div>
+  <div class=" w-full p-3 border-2 border-gray-100 rounded">
+    <div class="company-ratio">
+      <ul class="grid grid-cols-3 gap-x-4 gap-y-6">
+        <!-- Market Cap -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">Market Cap</span>
+          <span class="value text-gray-900">
+            ₹<span class="number font-semibold">{{data.valuation.marketCap | number:'1.0-0'}} Cr.</span> 
+          </span>
+        </li>
+    
+        <!-- Current Price -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">Current Price</span>
+          <span class="value text-gray-900">
+            ₹<span class="number font-semibold">{{data.currentPrice.BSE | number:'1.0-0'}}</span>
+          </span>
+        </li>
+    
+        <!-- High / Low -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">High / Low</span>
+          <span class="value text-gray-900">
+            ₹<span class="number font-semibold">{{data.yearHigh | number:'1.0-0'}}</span> / ₹<span class="number font-semibold">{{data.yearLow | number:'1.0-0'}}</span>
+          </span>
+        </li>
+    
+        <!-- Stock P/E -->
+        <li class="flex items-center p-3 rounded bg-[#ececec]">
+          <span class="name font-semibold text-ink-700 flex-grow">Stock P/E</span>
+          <span class="value text-gray-900">
+            <span class="number font-semibold">{{data.valuation.priceToEarningsValueRatio | sanitizeNumber }}</span>
+          </span>
+        </li>
+    
+        <!-- Book Value -->
+        <li class="flex items-center p-3 rounded bg-[#ececec]">
+          <span class="name font-semibold text-ink-700 flex-grow">Book Value</span>
+          <span class="value text-gray-900">
+            ₹<span class="number font-semibold">{{data.valuation.priceToBookValueRatio}}</span>
+          </span>
+        </li>
+    
+        <!-- Dividend Yield -->
+        <li class="flex items-center p-3 rounded bg-[#ececec]">
+          <span class="name font-semibold text-ink-700 flex-grow">Dividend Yield</span>
+          <span class="value text-gray-900">
+            <span class="number font-semibold">{{data.dividend.yield | sanitizeNumber}}</span>%
+          </span>
+        </li>
+    
+        <!-- ROCE -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">NPM</span>
+          <span class="value text-gray-900">
+            <span class="number font-semibold">{{data.profitability.netProfitMargin | sanitizeNumber}}</span>%
+          </span>
+        </li>
+    
+        <!-- ROE -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">ROE</span>
+          <span class="value text-gray-900">
+            <span class="number font-semibold">{{data.profitability.returnOnEquity | sanitizeNumber}}</span>%
+          </span>
+        </li>
+    
+        <!-- Face Value -->
+        <li class="flex items-center p-3">
+          <span class="name font-semibold text-ink-700 flex-grow">Debt To Equity</span>
+          <span class="value text-gray-900">
+            <span class="number font-semibold">{{data.debt.debtToEquity}}</span>
+          </span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  
+</div>

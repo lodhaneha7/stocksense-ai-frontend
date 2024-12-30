@@ -1,0 +1,15 @@
+<div>
+  <div class="mt-40 flex flex-col items-center relative">
+    <img src="../assets/market-analysis.png" alt="" class="w-32 h-32 mr-4">
+    <span class="font-sans text-2xl font-semibold mb-4 text-center">
+      Stock analysis tool for investors in India.
+    </span>
+    <form [formGroup]="companyFormGroup" class="flex justify-content-center w-full custom-home-autocomplete">
+      @if(showAutocomplate){
+      <p-autoComplete formControlName="keyword" [suggestions]="(filteredOptions$ | async) || [] " [showClear]="true"
+        variant="filled" field="issuerName" placeholder=" Search for a Company"
+        class="w-2/4 rounded-lg text-lg p-1 bg-gray-400" (onSelect)="search($event)" />
+      }
+    </form>
+  </div>
+</div>
